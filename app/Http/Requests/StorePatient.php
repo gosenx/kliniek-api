@@ -13,7 +13,7 @@ class StorePatient extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -24,7 +24,15 @@ class StorePatient extends FormRequest
     public function rules()
     {
         return [
-            //
+            'name' => 'required|min:5',
+            'bi' => 'unique:users|nullable|max:12|min:11',
+            'job_title' => 'nullable|min:2',
+            'gender' => 'nullable',
+            'birthday' => 'nullable',
+            'phone' => 'required|unique:users|max:9|min:9',
+            'email' => 'unique:users|nullable',
+            'address' => 'nullable|min:5',
+            'password' => 'nullable',
         ];
     }
 }
