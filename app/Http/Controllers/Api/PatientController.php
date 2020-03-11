@@ -4,10 +4,10 @@ namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\StorePatient;
+use App\Http\Resources\PatientResource;
 use App\Models\Patient;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 
@@ -20,7 +20,7 @@ class PatientController extends Controller
      */
     public function index()
     {
-        //
+        return response()->json(PatientResource::collection(Patient::all()), 200);
     }
 
     /**
@@ -66,29 +66,23 @@ class PatientController extends Controller
             ], 500);
         }
 
-        return response()->json($patient->toJson(), 201);
+        return response()->json(new PatientResource($patient), 201);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param \App\Models\Patient $patient
-     * @return \Illuminate\Http\Response
+     * @param Patient $patient
+     * @return JsonResponse
      */
     public function show(Patient $patient)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param \App\Models\Patient $patient
-     * @return \Illuminate\Http\Response
-     */
-    public function edit(Patient $patient)
-    {
-        //
+        if (is_null($patient)) {
+            return response()->json([
+                'message' => 'patient does not exist'
+            ], 404);
+        } else
+            return response()->json(new PatientResource($patient), 200);
     }
 
     /**

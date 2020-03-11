@@ -17,7 +17,6 @@ class PatientController extends TestCase
      */
     public function can_create_a_patient()
     {
-
         $response = $this->post('/api/patients', [
             'name' => 'Paulo Amosse',
             'bi' => '11023456789A',
@@ -31,4 +30,23 @@ class PatientController extends TestCase
         ]);
         $response->assertStatus(201);
     }
+
+    /**
+     * @test
+     */
+    public function can_read_all_the_students()
+    {
+        $response = $this->get('/api/patients');
+        $response->assertStatus(200);
+    }
+
+    /**
+     * @test
+     */
+    public function can_read_a_specific_student()
+    {
+        $response = $this->json('GET', '/api/patients/5');
+        $response->assertStatus(200);
+    }
+
 }
