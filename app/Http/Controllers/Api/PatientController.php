@@ -22,13 +22,6 @@ class PatientController extends Controller
         return response()->json(PatientResource::collection(Patient::all()), 200);
     }
 
-
-    public function create()
-    {
-        //
-    }
-
-
     public function store(StorePatient $request)
     {
         $patient = new Patient();
@@ -112,14 +105,21 @@ class PatientController extends Controller
         return response()->json(new PatientResource(Patient::find($patient->id)), 200);
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param \App\Models\Patient $patient
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy(Patient $patient)
+
+    public function destroy($id)
     {
-        //
+        if (is_numeric($id)) {
+            $patient = Patient::query()->find($id);
+        } else {
+            return response()->json([
+                'message' => 'the id parameter should be an int'
+            ], 500);
+        }
+
+        $patient->delete();
+        
+        return response()->json([
+            'message' => 'patient with the id of ' . $id . ' was successfully deleted'
+        ], 200);
     }
 }

@@ -23,4 +23,5 @@ Route::namespace('Api')->group(function () {
     Route::get('patients/{id}', 'PatientController@show');
     Route::post('patients', 'PatientController@store');
     Route::put('patients/{id}', 'PatientController@update');
+    Route::delete('patients/{id}', 'PatientController@destroy');
 });
