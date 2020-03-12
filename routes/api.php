@@ -20,6 +20,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::namespace('Api')->group(function () {
     Route::get('patients', 'PatientController@index');
-    Route::get('patients/{patient}', 'PatientController@show');
+    Route::get('patients/{id}', 'PatientController@show');
     Route::post('patients', 'PatientController@store');
+    Route::put('patients/{id}', 'PatientController@update');
 });

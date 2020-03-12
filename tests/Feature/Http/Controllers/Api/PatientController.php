@@ -9,7 +9,6 @@ use Tests\TestCase;
 class PatientController extends TestCase
 {
     use RefreshDatabase;
-
     /**
      * A basic feature test example.
      *
@@ -22,7 +21,7 @@ class PatientController extends TestCase
             'bi' => '11023456789A',
             'gender' => 'male',
             'birthday' => '1999-08-30',
-            'phone' => '842022036',
+            'phone' => '842122036',
             'email' => 'pamossecuambe@gmail.com',
             'address' => 'Kumbeza',
             'password' => 'qwertyuiop',
