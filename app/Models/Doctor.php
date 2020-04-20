@@ -11,4 +11,9 @@ class Doctor extends Model
     {
         return $this->morphOne(User::class, 'profile');
     }
+
+    public function specialty()
+    {
+        return $this->belongsTo(Specialty::class);
+    }
 }
