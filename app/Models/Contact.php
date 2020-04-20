@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Models\Authentication\User;
 use Illuminate\Database\Eloquent\Model;
 
 class Contact extends Model

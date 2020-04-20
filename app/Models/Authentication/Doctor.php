@@ -1,12 +1,15 @@
 <?php
 
-namespace App\Models;
+namespace App\Models\Authentication;
 
+use App\Models\Specialty;
 use Illuminate\Database\Eloquent\Model;
 
 class Doctor extends Model
 {
-    //
+
+    protected $guarded = [];
+
     public function user()
     {
         return $this->morphOne(User::class, 'profile');
