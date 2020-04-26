@@ -26,7 +26,7 @@ class AddSpecialtiesRelationshipToDoctorsTable extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
+        Schema::table('doctors', function (Blueprint $table) {
             $table->dropColumn('specialty_id');
         });
     }
