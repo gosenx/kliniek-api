@@ -25,10 +25,10 @@ class UserResource extends JsonResource
             'birthdate' => $this->birthdate,
             'job_title' => $this->when($this->hasPatientProfile(), $this->profile->job_title),
             'address' => $this->address,
-            'specialty' => $this->when($this->hasDoctorProfile(), $this->profile->specialty),
-            'contacts' => $this->contacts,
+            'specialty' => $this->when($this->hasDoctorProfile(), SpeciltyResource::make($this->profile->specialty)),
+            'contacts' => ContactResource::collection($this->contacts),
             'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at   ,
+            'updated_at' => $this->updated_at,
         ]
     }
 }
