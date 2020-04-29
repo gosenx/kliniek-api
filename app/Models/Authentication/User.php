@@ -46,4 +46,14 @@ class User extends Authenticatable
     {
         return $this->hasMany(Contact::class);
     }
+
+    public function hasPatientProfile(): bool
+    {
+        return $this->profile_type == Patient::class;
+    }
+
+    public function hasDoctorProfile(): bool
+    {
+        return $this->profile_type == Doctor::class;
+    }
 }
