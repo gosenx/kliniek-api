@@ -18,17 +18,19 @@ class UserResource extends JsonResource
         return [
             'id' => $this->id,
             'bi' => $this->bi,
-            'certification_code' => $this->when($this->hasDoctorProfile(), $this->profile->certification_code),
             'fullname' => $this->fullname,
             'email' => $this->email,
             'gender' => $this->gender,
             'birthdate' => $this->birthdate,
-            'job_title' => $this->when($this->hasPatientProfile(), $this->profile->job_title),
             'address' => $this->address,
-            'specialty' => $this->when($this->hasDoctorProfile(), SpeciltyResource::make($this->profile->specialty)),
             'contacts' => ContactResource::collection($this->contacts),
+            $this->mergeWhen($this->profile_type !== null, [
+                'profile_type' => $this->getProfileType(),
+                'doctor' => $this->when($this->hasDoctorProfile(), DoctorResource::make($this->profile)),
+                'patient' => $this->when($this->hasPatientProfile(), PatientResource::make($this->profile)),
+            ]),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
-        ]
+        ];
     }
 }
