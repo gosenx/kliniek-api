@@ -26,5 +26,18 @@ class Appointment extends Model
         return $this->belongsTo(Specialty::class);
     }
 
+    public static function scheduled()
+    {
+        return self::query()->where('state', '=', 'scheduled')->get();
+    }
 
+    public static function ongoing()
+    {
+        return self::query()->where('state', '=', 'ongoing')->get();
+    }
+
+    public static function complete()
+    {
+        return self::query()->where('state', '=', 'complete')->get();
+    }
 }
