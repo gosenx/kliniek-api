@@ -30,9 +30,9 @@ class AuthController extends Controller
         $patient->job_title = $request->input('job_title');
         $patient->save();
 
-        $user_data = $request->except(['job_title', 'client_id', 'client_secret']);
+        $data = $request->except(['job_title', 'client_id', 'client_secret']);
         $data["password"] = Hash::make($request->input("password"));
-        $patient->user()->create($user_data);
+        $patient->user()->create($data);
 
         return ['access_token' => $patient->user->createToken($patient->user->fullname)->accessToken];
     }
