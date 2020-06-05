@@ -15,9 +15,18 @@ use Laravel\Passport\Client;
 class AuthController extends Controller
 {
     //
-    public function register(StoreUser $request)
+    public function signup(StoreUser $request)
     {
-        $client = Client::query()->where('id', $request->input('client_id'))->where('secret', $request->input('client_secret'))->first();
+        if ($request->input('grant_type') != "password") {
+            return response()->json([
+                "message" => "Failed to authenticate the request",
+                "errors" => ["grant_type" => "grant_type not supported."],
+            ], 400);
+        }
+
+        $client = Client::query()->where('id', $request->input('client_id'))
+            ->where('secret', $request->input('client_secret'))
+            ->where('password_client', 1)->first();
 
         if (is_null($client)) {
             return response()->json([
@@ -30,7 +39,7 @@ class AuthController extends Controller
         $patient->job_title = $request->input('job_title');
         $patient->save();
 
-        $data = $request->except(['job_title', 'client_id', 'client_secret']);
+        $data = $request->except(['job_title', 'client_id', 'client_secret', 'grant_type']);
         $data["password"] = Hash::make($request->input("password"));
         $patient->user()->create($data);
 

@@ -19,4 +19,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return \App\Http\Resources\UserResource::make($request->user());
 });
 
-Route::post('signup', [AuthController::class, 'register']);
+Route::post('signup', [AuthController::class, 'signup']);
