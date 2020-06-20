@@ -15,8 +15,8 @@ use App\Http\Controllers\Api\Auth\AuthController;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
-    return \App\Http\Resources\UserResource::make($request->user());
+Route::middleware('auth:api')->group(function () {
+    Route::get('user', [AuthController::class, 'user']);
 });
 
 Route::post('signup', [AuthController::class, 'signup']);

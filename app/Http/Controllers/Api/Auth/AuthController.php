@@ -9,12 +9,19 @@ use App\Models\Authentication\Patient;
 use App\Models\Authentication\User;
 use Illuminate\Http\Request;
 use Illuminate\Routing\Route;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Laravel\Passport\Client;
 
 class AuthController extends Controller
 {
     //
+
+    public function user()
+    {
+        return UserResource::make(Auth::user());
+    }
+
     public function signup(StoreUser $request)
     {
         if ($request->input('grant_type') != "password") {
