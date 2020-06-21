@@ -3,7 +3,7 @@
 namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\StoreUser;
+use App\Http\Requests\SignupRequest;
 use App\Http\Resources\UserResource;
 use App\Models\Authentication\Patient;
 use App\Models\Authentication\User;
@@ -22,7 +22,7 @@ class AuthController extends Controller
         return UserResource::make(Auth::user());
     }
 
-    public function signup(StoreUser $request)
+    public function signup(SignupRequest $request)
     {
         if ($request->input('grant_type') != "password") {
             return response()->json([
