@@ -9,6 +9,20 @@ class Patient extends Model
 {
     protected $guarded = [];
 
+    public function generatePatientCode()
+    {
+        $this->patient_code = strtotime('now');
+    }
+
+    /**
+     * @param $patient_code
+     * @return Patient
+     */
+    public function findByPatientCode($patient_code)
+    {
+        return self::query()->where('patient_code', '=', $patient_code)->first();
+    }
+
     public function user()
     {
         return $this->morphOne(User::class, 'profile');
