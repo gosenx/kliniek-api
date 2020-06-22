@@ -66,4 +66,14 @@ class User extends Authenticatable
         }
         return 'profile not identified';
     }
+
+    public static function patients()
+    {
+        return self::query()->where('profile_type', '=', Patient::class)->get();
+    }
+
+    public static function doctors()
+    {
+        return self::query()->where('profile_type', '=', Doctor::class)->get();
+    }
 }
