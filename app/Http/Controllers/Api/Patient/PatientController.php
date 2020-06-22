@@ -33,7 +33,7 @@ class PatientController extends Controller
 
     public function show($patient_code)
     {
-        $patient = (new Patient())->findByPatientCode($patient_code);
+        $patient = Patient::findPatientByCode($patient_code);
 
         if (is_null($patient)) {
             return response()->json([
@@ -46,7 +46,7 @@ class PatientController extends Controller
 
     public function update(UpdatePatientRequest $request, $patient_code)
     {
-        $patient = (new Patient())->findByPatientCode($patient_code);
+        $patient = Patient::findPatientByCode($patient_code);
 
         $patient->update($request->only(['job_title']));
         $user = $patient->user()->update($request->except(['job_title']));
@@ -56,7 +56,7 @@ class PatientController extends Controller
 
     public function destroy($patient_code)
     {
-        $patient = (new Patient)->findByPatientCode($patient_code);
+        $patient = Patient::findPatientByCode($patient_code);
 
         if (is_null($patient)) {
             return response()->json([

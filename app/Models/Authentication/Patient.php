@@ -18,7 +18,7 @@ class Patient extends Model
      * @param $patient_code
      * @return Patient
      */
-    public function findByPatientCode($patient_code)
+    public static function findPatientByCode($patient_code)
     {
         return self::query()->where('patient_code', '=', $patient_code)->first();
     }
