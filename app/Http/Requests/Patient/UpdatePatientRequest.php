@@ -24,7 +24,7 @@ class UpdatePatientRequest extends FormRequest
      */
     public function rules()
     {
-        $user = (new Patient())->findByPatientCode($this->patient_code)->user;
+        $user = Patient::findPatientByCode($this->patient_code)->user;
         return [
             'fullname' => 'required|min:10',
             'email' => 'required|email|unique:users,' . $user->id,
