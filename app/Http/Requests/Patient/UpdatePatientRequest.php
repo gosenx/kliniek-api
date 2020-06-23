@@ -27,9 +27,9 @@ class UpdatePatientRequest extends FormRequest
         $user = Patient::findPatientByCode($this->patient_code)->user;
         return [
             'fullname' => 'required|min:10',
-            'email' => 'required|email|unique:users,' . $user->id,
-            'bi' => 'nullable|regex:/^1[0-2]{1}[0-9]{8}[A-Z]$/|unique:users,' . $user->id,
-            'birthdate' => 'nullable|date_format:d/m/Y|before_or_equal:-16 years',
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'bi' => 'nullable|regex:/^1[0-2]{1}[0-9]{8}[A-Z]$/|unique:users,bi,' . $user->id,
+            'birthdate' => 'nullable|date_format:Y-m-d|before_or_equal:-16 years',
             'gender' => 'nullable',
             'address' => 'nullable',
             'password' => 'nullable|min:6',
