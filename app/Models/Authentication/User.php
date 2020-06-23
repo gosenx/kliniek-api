@@ -64,7 +64,7 @@ class User extends Authenticatable
         } else if ($this->profile_type == Doctor::class) {
             return 'doctor';
         }
-        return 'profile not identified';
+        return 'recepcionist';
     }
 
     public static function patients()

@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\Patient\AppointmentController;
 use App\Http\Controllers\Api\Patient\PatientController;
+use App\Http\Controllers\Api\Doctor\DoctorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -31,6 +32,11 @@ Route::middleware('auth:api')->group(function () {
     // Other Resources
 
     //TODO: Doctor Resources
+    Route::get('doctors', [DoctorController::class, 'index']);
+    Route::post('doctors', [DoctorController::class, 'store']);
+    Route::get('doctors/{certification_code}', [DoctorController::class, 'show']);
+    Route::put('doctors/{certification_code}', [DoctorController::class, 'update']);
+    Route::delete('doctors/{certification_code}', [DoctorController::class, 'destroy']);
 
     //TODO: Appointment Resources
 

@@ -26,6 +26,15 @@ class Doctor extends Model
         return $this->hasMany(Appointment::class);
     }
 
+    /**
+     * @param $certification_code
+     * @return Doctor
+     */
+    public static function findDoctorByCertificationCode($certification_code)
+    {
+        return self::query()->where('certification_code', '=', $certification_code)->first();
+    }
+
     public function scheduledAppointments()
     {
         return $this->appointments()->where('state', '=', 'scheduled')->get();
