@@ -16,19 +16,16 @@ class UserResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->id,
-            'bi' => $this->bi,
+            'profile_type' => $this->getProfileType(),
+            $this->mergeWhen($this->hasPatientProfile(), PatientResource::make($this->profile)),
+            $this->mergeWhen($this->hasDoctorProfile(), DoctorResource::make($this->profile)),
             'fullname' => $this->fullname,
             'email' => $this->email,
+            'bi' => $this->bi,
             'gender' => $this->gender,
             'birthdate' => $this->birthdate,
             'address' => $this->address,
             'contacts' => ContactResource::collection($this->contacts),
-            $this->mergeWhen($this->profile_type !== null, [
-                'profile_type' => $this->getProfileType(),
-                'doctor' => $this->when($this->hasDoctorProfile(), DoctorResource::make($this->profile)),
-                'patient' => $this->when($this->hasPatientProfile(), PatientResource::make($this->profile)),
-            ]),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

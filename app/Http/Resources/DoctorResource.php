@@ -15,11 +15,8 @@ class DoctorResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->id,
             'certification_code' => $this->certification_code,
             'specialty' => SpeciltyResource::make($this->specialty),
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at,
         ];
     }
 }
