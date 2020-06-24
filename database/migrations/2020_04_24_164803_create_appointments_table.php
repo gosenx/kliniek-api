@@ -18,9 +18,11 @@ class CreateAppointmentsTable extends Migration
             $table->unsignedBigInteger('patient_id')->id();
             $table->unsignedBigInteger('doctor_id')->nullable();
             $table->unsignedBigInteger('specialty_id')->nullable();
-            $table->enum('state', ['scheduled', 'ongoing', 'complete'])->default('scheduled');
             $table->date('date');
             $table->time('time');
+            $table->enum('state', ['scheduled', 'ongoing', 'complete'])->default('scheduled');
+            $table->text('prescription')->nullable();
+            $table->text('notes')->nullable();
             $table->timestamps();
 
             $table->unique(['patient_id', 'date', 'time']);
