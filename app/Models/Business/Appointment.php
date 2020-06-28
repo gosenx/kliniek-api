@@ -46,14 +46,12 @@ class Appointment extends Model
                 'description' => $description,
             ]);
         } catch (Exception $exception) {
-            $exception->getMessage();
-
             return response()->json([
-                'message' => 'Duplicate schedule occured!'
+                'message' => 'Duplicate schedule occurred!'
             ], 412);
         }
 
-        return AppointmentResource::make($appointment);
+        return $appointment;
     }
 
     public static function ongoing()
