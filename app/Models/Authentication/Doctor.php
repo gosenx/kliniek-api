@@ -52,7 +52,7 @@ class Doctor extends Model
 
     public function hasScheduledAppointmentsOn($date, $hour)
     {
-        $this->getScheduledAppointmentsOn()->first();
+        $this->getScheduledAppointmentsOn($date, $hour)->first();
     }
 
     /**

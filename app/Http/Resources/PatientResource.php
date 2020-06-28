@@ -16,6 +16,7 @@ class PatientResource extends JsonResource
     {
         return [
             'patient_code' => $this->patient_code,
+            'weight'=>$this->weight,
             'job_title' => $this->job_title,
         ];
     }
