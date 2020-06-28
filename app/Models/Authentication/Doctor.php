@@ -49,4 +49,22 @@ class Doctor extends Model
     {
         return $this->appointments()->where('state', '=', 'complete')->get();
     }
+
+    public function hasScheduledAppointmentsOn($date, $hour)
+    {
+        $this->getScheduledAppointmentsOn()->first();
+    }
+
+    /**
+     * @param $date
+     * @param $hour
+     * @return mixed
+     */
+    public function getScheduledAppointmentsOn($date, $hour)
+    {
+        $hourPlus45Min = $date("H:i", strtotime($hour . "+45 min"));
+        return $this->scheduledAppointments()
+            ->where('date', '=', $date)
+            ->whereBetween('hour', [$hour, $hourPlus45Min])->get();
+    }
 }

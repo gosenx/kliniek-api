@@ -13,7 +13,7 @@ class AppointmentController extends Controller
 {
     public function schedule(ScheduleAppointRequest $request)
     {
-        $user = Auth::$user();
-        $docor = Doctor::query()->find($request);
+        $user = Auth::user();
+        $docor = Doctor::query()->find($request->doctor_id);
     }
 }

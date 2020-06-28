@@ -26,7 +26,7 @@ class ScheduleAppointRequest extends FormRequest
         return [
             'doctor_id' => ['required', 'exists:doctors,id'],
             'specialty_id' => ['nullable', 'exists:specialties,id'],
-            'date' => ['required', 'date', 'date_format:d/m/Y', 'after:today'],
+            'date' => ['required', 'date', 'after:+5hours'],
             'time' => ['required', 'time', 'date_format:H:i']
         ];
     }
