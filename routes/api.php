@@ -31,7 +31,7 @@ Route::middleware('auth:api')->group(function () {
 
     // Other Resources
 
-    //TODO: Doctor Resources
+    //Doctor Resources
     Route::get('doctors', [DoctorController::class, 'index']);
     Route::post('doctors', [DoctorController::class, 'store']);
     Route::get('doctors/{certification_code}', [DoctorController::class, 'show']);
@@ -39,6 +39,11 @@ Route::middleware('auth:api')->group(function () {
     Route::delete('doctors/{certification_code}', [DoctorController::class, 'destroy']);
 
     //TODO: Appointment Resources
+    Route::get('appointments', [AppointmentController::class, 'index']);
+    Route::get('patients/{patient_code}/appointments', [AppointmentController::class, 'index']);
+    Route::post('patients/{patient_code}/appointments', [AppointmentController::class, 'store']);
+    Route::put('patients/{patient_code}/appointments/{id}', [AppointmentController::class, 'update']);
+    Route::delete('patients/{patient_code}/appointments/{id}', [AppointmentController::class, 'destroy']);
 
 });
 

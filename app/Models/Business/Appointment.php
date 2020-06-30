@@ -29,34 +29,13 @@ class Appointment extends Model
         return $this->belongsTo(Specialty::class);
     }
 
-    public static function scheduled()
-    {
-        return self::query()->where('state', '=', 'scheduled')->get();
-    }
-
-    /**
-     * @param $patient_code
-     * @param $doctor_code
-     * @param $date
-     * @param string $time
-     * @param int $patient_weight
-     * @param string $description
-     * @return \Illuminate\Database\Eloquent\Builder|Model|string
-     */
-    public static function makeAppointment($patient_code, $doctor_code, $date, $time = "13:30", $patient_weight = 0, $description = "Nenhuma descrição sobre o estado actual fornecida.")
+    public static function makeAppointment(array $data)
     {
         try {
-            $appointment = Appointment::query()->create([
-                'patient_code' => $patient_code,
-                'doctor_code' => $doctor_code,
-                'patient_weight' => $patient_weight,
-                'date' => $date,
-                'time' => $time,
-                'description' => $description,
-            ]);
+            $appointment = Appointment::query()->create($data);
 
             $patient = new Patient();
-            $patient->weight = $patient_weight;
+            $patient->weight = $data['patient_weight'];
             $patient->update();
 
             return $appointment;
@@ -65,6 +44,11 @@ class Appointment extends Model
             return 'Verify the inputs, they might be duplicates.';
         }
 
+    }
+
+    public static function scheduled()
+    {
+        return self::query()->where('state', '=', 'scheduled')->get();
     }
 
     public static function ongoing()

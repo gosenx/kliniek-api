@@ -23,7 +23,22 @@ class Doctor extends Model
 
     public function appointments()
     {
-        return $this->hasMany(Appointment::class);
+        return $this->hasMany(Appointment::class, 'doctor_code', 'certification_code');
+    }
+
+    public function getAllAppointments()
+    {
+        return $this->appointments;
+    }
+
+    public function getAppointmentsByState($state)
+    {
+        $this->appointments()->where('state', '=', $state)->get();
+    }
+
+    public function getAppointmentsById($id)
+    {
+        return $this->appointments()->find($id);
     }
 
     /**

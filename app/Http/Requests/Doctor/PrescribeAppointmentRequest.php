@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Requests\Appointment;
+namespace App\Http\Requests\Doctor;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class UpdateAppointmentRequest extends FormRequest
+class PrescribeAppointmentRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,11 +24,8 @@ class UpdateAppointmentRequest extends FormRequest
     public function rules()
     {
         return [
-            'doctor_code' => 'nullable|exists:doctors,certification_code',
-            'date' => 'required|date|after_or_equal:tomorrow',
-            'time' => 'required|regex:/^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/',
-            'patient_weight' => 'numeric',
-            'description' => 'nullable'
+            'prescription' => 'required',
+            'notes' => 'nullable'
         ];
     }
 }
