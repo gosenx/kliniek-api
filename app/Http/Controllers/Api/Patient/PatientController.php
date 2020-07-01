@@ -41,7 +41,7 @@ class PatientController extends Controller
             ], 404);
         }
 
-        return response()->jseon(UserResource::make($patient->user), 200);
+        return response()->json(UserResource::make($patient->user), 200);
     }
 
     public function update(UpdatePatientRequest $request, $patient_code)

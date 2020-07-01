@@ -53,7 +53,7 @@ class PatientAppointmentController extends Controller
         ], 412);
     }
 
-    public function show($patient_code)
+    public function show($patient_code, $id)
     {
         $patient = Patient::findPatientByCode($patient_code);
 
@@ -62,6 +62,16 @@ class PatientAppointmentController extends Controller
                 'message' => 'Patient not found.'
             ]);
         }
+
+        $appointment = $patient->getAppointmentsById($id);
+
+        if (is_null($appointment)) {
+            return response()->json([
+                'message' => 'Appointment not found.'
+            ], 404);
+        }
+
+        return response()->json([AppointmentResource::make($appointment)]);
     }
 
     public function update(StoreOrUpdateAppointmentRequest $request, $patient_code, $id)

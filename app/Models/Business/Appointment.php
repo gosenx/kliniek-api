@@ -2,13 +2,10 @@
 
 namespace App\Models\Business;
 
-use App\Http\Resources\AppointmentResource;
 use App\Models\Authentication\Doctor;
 use App\Models\Authentication\Patient;
 use App\Models\Specialty;
 use Illuminate\Database\Eloquent\Model;
-use Lcobucci\JWT\ParserTest;
-use mysql_xdevapi\Exception;
 
 class Appointment extends Model
 {
@@ -29,6 +26,11 @@ class Appointment extends Model
         return $this->belongsTo(Specialty::class);
     }
 
+    public static function getAppointmentsByState($state)
+    {
+        return self::query()->where('state', '=', $state)->get();
+    }
+
     public static function makeAppointment(array $data)
     {
         try {
@@ -40,7 +42,7 @@ class Appointment extends Model
 
             return $appointment;
 
-        } catch (Exception $exception) {
+        } catch (\Exception $exception) {
             return 'Verify the inputs, they might be duplicates.';
         }
 

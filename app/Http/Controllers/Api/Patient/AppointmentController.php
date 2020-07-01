@@ -6,13 +6,20 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Appointment\StoreOrUpdateAppointmentRequest;
 use App\Http\Resources\AppointmentResource;
 use App\Models\Business\Appointment;
+use Illuminate\Http\Request;
 
 class AppointmentController extends Controller
 {
 
-    public function index()
+    public function index(Request $request)
     {
-        return response()->json(AppointmentResource::collection(Appointment::all()));
+        if ($request->query('state')) {
+            $appointments = Appointment::getAppointmentsByState($request->state);
+        } else {
+            $appointments = Appointment::all();
+        }
+
+        return response()->json(AppointmentResource::collection($appointments));
     }
 
     public function store(StoreOrUpdateAppointmentRequest $request)
@@ -48,7 +55,7 @@ class AppointmentController extends Controller
     {
         $appointment = Appointment::query()->find($id);
 
-        if (!is_null($appointment)) {
+        if (is_null($appointment)) {
             return response()->json([
                 'message' => 'Appointment not found.'
             ], 404);
