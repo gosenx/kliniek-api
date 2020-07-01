@@ -20,21 +20,11 @@ use App\Http\Controllers\Api\Doctor\DoctorAppointmentController;
 */
 
 Route::middleware('auth:api')->group(function () {
+    // Get current user, whether is a patient, doctor, receptionist, admin or super_admin
     Route::get('user', [AuthController::class, 'user']);
 
-    // Appointment Resources
-    Route::get('appointments', [AppointmentController::class, 'index']);
-    Route::post('appointments', [AppointmentController::class, 'store']);
-    Route::get('appointments/{id}', [AppointmentController::class, 'show']);
-    Route::put('appointments/{id}', [AppointmentController::class, 'update']);
-    Route::delete('appointments/{id}', [AppointmentController::class, 'destroy']);
-
     // Patient resources
-    Route::get('patients', [PatientController::class, 'index']);
-    Route::post('patients', [PatientController::class, 'store']);
-    Route::get('patients/{patient_code}', [PatientController::class, 'show']);
     Route::put('patients/{patient_code}', [PatientController::class, 'update']);
-    Route::delete('patients/{patient_code}', [PatientController::class, 'destroy']);
 
     // Patients Appointment Resource
     Route::get('patients/{patient_code}/appointments', [PatientAppointmentController::class, 'index']);
@@ -44,16 +34,33 @@ Route::middleware('auth:api')->group(function () {
     Route::delete('patients/{patient_code}/appointments/{id}', [PatientAppointmentController::class, 'destroy']);
 
     // Doctor Resources
-    Route::get('doctors', [DoctorController::class, 'index']);
-    Route::post('doctors', [DoctorController::class, 'store']);
-    Route::get('doctors/{certification_code}', [DoctorController::class, 'show']);
     Route::put('doctors/{certification_code}', [DoctorController::class, 'update']);
-    Route::delete('doctors/{certification_code}', [DoctorController::class, 'destroy']);
 
     // Doctor Appointment Resources
     Route::get('doctors/{certification_code}/appointments', [DoctorAppointmentController::class, 'index']);
     Route::post('doctors/{certification_code}/appointments/{id}', [DoctorAppointmentController::class, 'prescribe']);
     Route::put('doctors/{certification_code}/appointments/{id}', [DoctorAppointmentController::class, 'prescribe']);
+
+    Route::middleware('admin_privileges')->group(function () {
+        // Patient resources
+        Route::get('patients/{patient_code}', [PatientController::class, 'show']);
+        Route::get('patients', [PatientController::class, 'index']);
+        Route::post('patients', [PatientController::class, 'store']);
+        Route::delete('patients/{patient_code}', [PatientController::class, 'destroy']);
+
+        // Doctor resources
+        Route::get('doctors/{certification_code}', [DoctorController::class, 'show']);
+        Route::get('doctors', [DoctorController::class, 'index']);
+        Route::post('doctors', [DoctorController::class, 'store']);
+        Route::delete('doctors/{certification_code}', [DoctorController::class, 'destroy']);
+
+        // Appointment Resources
+        Route::get('appointments', [AppointmentController::class, 'index']);
+        Route::post('appointments', [AppointmentController::class, 'store']);
+        Route::get('appointments/{id}', [AppointmentController::class, 'show']);
+        Route::put('appointments/{id}', [AppointmentController::class, 'update']);
+        Route::delete('appointments/{id}', [AppointmentController::class, 'destroy']);
+    });
 
 });
 

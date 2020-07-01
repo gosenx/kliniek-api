@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Http\Middleware\HasAdminPrivileges;
 use App\Http\Middleware\IsAdmin;
 use App\Http\Middleware\IsReceptionist;
 use App\Http\Middleware\IsSuperAdmin;
@@ -66,8 +67,9 @@ class Kernel extends HttpKernel
         'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class,
 
-        'receptionist' => IsReceptionist::class,
-        'admin' => IsAdmin::class,
-        'super_admin' => IsSuperAdmin::class,
+        'admin_privileges' => HasAdminPrivileges::class,
+        'is_receptionist' => IsReceptionist::class,
+        'is_admin' => IsAdmin::class,
+        'is_super_admin' => IsSuperAdmin::class,
     ];
 }
