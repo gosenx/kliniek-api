@@ -36,7 +36,7 @@ class Appointment extends Model
         try {
             $appointment = Appointment::query()->create($data);
 
-            $patient = new Patient();
+            $patient = Patient::findPatientByCode($data['patient_code']);
             $patient->weight = $data['patient_weight'];
             $patient->update();
 
