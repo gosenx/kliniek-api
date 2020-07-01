@@ -57,14 +57,31 @@ class User extends Authenticatable
         return $this->profile_type == Doctor::class;
     }
 
+    public function hasReceptionistProfile(): bool
+    {
+        return $this->profile_type == Admin::class && $this->profile->role == 'receptionist';
+    }
+
+    public function hasAdminProfile(): bool
+    {
+        return $this->profile_type == Admin::class && $this->profile->role == 'admin';
+    }
+
+    public function hasSuperAdminProfile(): bool
+    {
+        return $this->profile_type == Admin::class && $this->profile->role == 'super_admin';
+    }
+
     public function getProfileType(): string
     {
         if ($this->profile_type == Patient::class) {
             return 'patient';
         } else if ($this->profile_type == Doctor::class) {
             return 'doctor';
+        } else if ($this->profile_type == Admin::class) {
+            return $this->profile->role;
         }
-        return 'recepcionist';
+        return 'unknown';
     }
 
     public static function patients()
