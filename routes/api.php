@@ -37,7 +37,7 @@ Route::middleware('auth:api')->group(function () {
     Route::delete('patients/{patient_code}', [PatientController::class, 'destroy']);
 
     // Patients Appointment Resource
-    Route::get('patients/{patient_code}/appointments?state={state}', [PatientAppointmentController::class, 'index']);
+    Route::get('patients/{patient_code}/appointments', [PatientAppointmentController::class, 'index']);
     Route::post('patients/{patient_code}/appointments', [PatientAppointmentController::class, 'store']);
     Route::get('patients/{patient_code}/appointments/{id}', [PatientAppointmentController::class, 'show']);
     Route::put('patients/{patient_code}/appointments/{id}', [PatientAppointmentController::class, 'update']);
@@ -51,7 +51,7 @@ Route::middleware('auth:api')->group(function () {
     Route::delete('doctors/{certification_code}', [DoctorController::class, 'destroy']);
 
     // Doctor Appointment Resources
-    Route::get('doctors/{certification_code}/appointments?state={state}', [DoctorAppointmentController::class, 'index']);
+    Route::get('doctors/{certification_code}/appointments', [DoctorAppointmentController::class, 'index']);
     Route::post('doctors/{certification_code}/appointments/{id}', [DoctorAppointmentController::class, 'prescribe']);
     Route::put('doctors/{certification_code}/appointments/{id}', [DoctorAppointmentController::class, 'prescribe']);
 

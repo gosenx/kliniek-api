@@ -13,7 +13,7 @@ class AppointmentController extends Controller
 
     public function index(Request $request)
     {
-        if ($request->query('state')) {
+        if ($request->has('state')) {
             $appointments = Appointment::getAppointmentsByState($request->state);
         } else {
             $appointments = Appointment::all();
@@ -68,15 +68,15 @@ class AppointmentController extends Controller
     {
         $appointment = Appointment::query()->find($id);
 
-        if ($appointment) {
-            $appointment->delete();
+        if (is_null($appointment)) {
             return response()->json([
-                'message' => 'Appointment deleted successfully.'
-            ]);
+                'message' => 'Appointment not found.'
+            ], 404);
         }
 
+        $appointment->delete();
         return response()->json([
-            'message' => 'Appointment not found.'
-        ], 404);
+            'message' => 'Appointment deleted successfully.'
+        ]);
     }
 }

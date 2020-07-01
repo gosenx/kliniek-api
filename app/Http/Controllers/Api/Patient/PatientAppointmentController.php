@@ -12,7 +12,7 @@ use Illuminate\Http\Request;
 class PatientAppointmentController extends Controller
 {
 
-    public function index($patient_code, $state)
+    public function index(Request $request, $patient_code)
     {
         $patient = Patient::findPatientByCode($patient_code);
 
@@ -22,10 +22,10 @@ class PatientAppointmentController extends Controller
             ]);
         }
 
-        if (is_null($state)) {
-            $appointments = $patient->getAllAppointments();
+        if ($request->has('state')) {
+            $appointments = $patient->getAppointmentsByState($request->state);
         } else {
-            $appointments = $patient->getAppointmentsByState($state);
+            $appointments = $patient->getAllAppointments();
         }
 
         return response()->json(AppointmentResource::collection($appointments));
@@ -60,7 +60,7 @@ class PatientAppointmentController extends Controller
         if (is_null($patient)) {
             return response()->json([
                 'message' => 'Patient not found.'
-            ]);
+            ], 404);
         }
 
         $appointment = $patient->getAppointmentsById($id);

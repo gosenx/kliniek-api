@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 class DoctorAppointmentController extends Controller
 {
 
-    public function index($certification_code, $state)
+    public function index(Request $request,$certification_code)
     {
         $doctor = Doctor::findDoctorByCertificationCode($certification_code);
 
@@ -20,10 +20,10 @@ class DoctorAppointmentController extends Controller
             ]);
         }
 
-        if (is_null($state)) {
-            $appointments = $doctor->getAllAppointments();
+        if ($request->has('state')) {
+            $appointments = $doctor->getAppointmentsByState($request->state);
         } else {
-            $appointments = $doctor->getAppointmentsByState($state);
+            $appointments = $doctor->getAllAppointments();
         }
 
         return response()->json(AppointmentResource::collection($appointments));
