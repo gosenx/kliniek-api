@@ -43,14 +43,14 @@ Route::middleware('auth:api')->group(function () {
 
     Route::middleware('admin_privileges')->group(function () {
         // Patient resources
-        Route::get('patients/{patient_code}', [PatientController::class, 'show']);
         Route::get('patients', [PatientController::class, 'index']);
+        Route::get('patients/{patient_code}', [PatientController::class, 'show']);
         Route::post('patients', [PatientController::class, 'store']);
         Route::delete('patients/{patient_code}', [PatientController::class, 'destroy']);
 
         // Doctor resources
-        Route::get('doctors/{certification_code}', [DoctorController::class, 'show']);
         Route::get('doctors', [DoctorController::class, 'index']);
+        Route::get('doctors/{certification_code}', [DoctorController::class, 'show']);
         Route::post('doctors', [DoctorController::class, 'store']);
         Route::delete('doctors/{certification_code}', [DoctorController::class, 'destroy']);
 
