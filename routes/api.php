@@ -18,41 +18,46 @@ use App\Http\Controllers\Api\Doctor\DoctorAppointmentController;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::post('signup', [AuthController::class, 'signup']);
 
 Route::middleware('auth:api')->group(function () {
     // Get current user, whether is a patient, doctor, receptionist, admin or super_admin
     Route::get('user', [AuthController::class, 'user']);
 
-    // Patient resources
-    Route::put('patients/{patient_code}', [PatientController::class, 'update']);
-
-    // Patients Appointment Resource
-    Route::get('patients/{patient_code}/appointments', [PatientAppointmentController::class, 'index']);
-    Route::post('patients/{patient_code}/appointments', [PatientAppointmentController::class, 'store']);
-    Route::get('patients/{patient_code}/appointments/{id}', [PatientAppointmentController::class, 'show']);
-    Route::put('patients/{patient_code}/appointments/{id}', [PatientAppointmentController::class, 'update']);
-    Route::delete('patients/{patient_code}/appointments/{id}', [PatientAppointmentController::class, 'destroy']);
-
-    // Doctor Resources
-    Route::put('doctors/{certification_code}', [DoctorController::class, 'update']);
-
-    // Doctor Appointment Resources
-    Route::get('doctors/{certification_code}/appointments', [DoctorAppointmentController::class, 'index']);
-    Route::post('doctors/{certification_code}/appointments/{id}', [DoctorAppointmentController::class, 'prescribe']);
-    Route::put('doctors/{certification_code}/appointments/{id}', [DoctorAppointmentController::class, 'prescribe']);
-
-    Route::middleware('admin_privileges')->group(function () {
+    Route::middleware(['IsPatientOrAdministrator'])->group(function () {
         // Patient resources
-        Route::get('patients', [PatientController::class, 'index']);
         Route::get('patients/{patient_code}', [PatientController::class, 'show']);
-        Route::post('patients', [PatientController::class, 'store']);
+        Route::put('patients/{patient_code}', [PatientController::class, 'update']);
         Route::delete('patients/{patient_code}', [PatientController::class, 'destroy']);
 
-        // Doctor resources
-        Route::get('doctors', [DoctorController::class, 'index']);
+        // Patients Appointment Resource
+        Route::get('patients/{patient_code}/appointments', [PatientAppointmentController::class, 'index']);
+        Route::post('patients/{patient_code}/appointments', [PatientAppointmentController::class, 'store']);
+        Route::get('patients/{patient_code}/appointments/{id}', [PatientAppointmentController::class, 'show']);
+        Route::put('patients/{patient_code}/appointments/{id}', [PatientAppointmentController::class, 'update']);
+        Route::delete('patients/{patient_code}/appointments/{id}', [PatientAppointmentController::class, 'destroy']);
+    });
+
+    Route::middleware(['IsDoctorOrAdministrator'])->group(function () {
+        // Doctor Resources
         Route::get('doctors/{certification_code}', [DoctorController::class, 'show']);
-        Route::post('doctors', [DoctorController::class, 'store']);
         Route::delete('doctors/{certification_code}', [DoctorController::class, 'destroy']);
+        Route::put('doctors/{certification_code}', [DoctorController::class, 'update']);
+
+        // Doctor Appointment Resources
+        Route::get('doctors/{certification_code}/appointments', [DoctorAppointmentController::class, 'index']);
+        Route::post('doctors/{certification_code}/appointments/{id}', [DoctorAppointmentController::class, 'prescribe']);
+        Route::put('doctors/{certification_code}/appointments/{id}', [DoctorAppointmentController::class, 'prescribe']);
+    });
+
+    Route::middleware('HasAdminPrivileges')->group(function () {
+        // Patient Resources
+        Route::get('patients', [PatientController::class, 'index']);
+        Route::post('patients', [PatientController::class, 'store']);
+
+        // Doctor Resources
+        Route::get('doctors', [DoctorController::class, 'index']);
+        Route::post('doctors', [DoctorController::class, 'store']);
 
         // Appointment Resources
         Route::get('appointments', [AppointmentController::class, 'index']);
@@ -63,5 +68,3 @@ Route::middleware('auth:api')->group(function () {
     });
 
 });
-
-Route::post('signup', [AuthController::class, 'signup']);

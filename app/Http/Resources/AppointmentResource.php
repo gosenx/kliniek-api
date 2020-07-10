@@ -19,12 +19,14 @@ class AppointmentResource extends JsonResource
         return [
             'id' => $this->id,
             'state' => $this->state,
+            'date' => $this->date,
+            'time' => $this->time,
             'patient_weight'=>$this->weight,
             'description' => $this->description,
             'prescription' => $this->prescription,
             'notes' => $this->notes,
-            'patient' => PatientResource::make(Patient::findPatientByCode($this->patient_code)),
-            'doctor' => DoctorResource::make(Doctor::findDoctorByCertificationCode($this->doctor_code)),
+            'patient' => UserResource::make(Patient::findPatientByCode($this->patient_code)->user),
+            'doctor' => UserResource::make(Doctor::findDoctorByCertificationCode($this->doctor_code)->user),
             'created_at'=>$this->created_at,
             'updated_at'=>$this->update_at
         ];
