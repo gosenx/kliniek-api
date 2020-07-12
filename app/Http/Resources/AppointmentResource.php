@@ -21,7 +21,7 @@ class AppointmentResource extends JsonResource
             'state' => $this->state,
             'date' => $this->date,
             'time' => $this->time,
-            'patient_weight'=>$this->weight,
+            'patient_weight'=>$this->patient_weight,
             'description' => $this->description,
             'prescription' => $this->prescription,
             'notes' => $this->notes,
