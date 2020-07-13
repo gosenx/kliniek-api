@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\Auth\AuthController;
-use App\Http\Controllers\Api\Patient\AppointmentController;
+use App\Http\Controllers\Api\AppointmentController;
 use App\Http\Controllers\Api\Patient\PatientController;
 use App\Http\Controllers\Api\Patient\PatientAppointmentController;
 use App\Http\Controllers\Api\Doctor\DoctorController;
