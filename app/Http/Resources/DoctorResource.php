@@ -16,7 +16,7 @@ class DoctorResource extends JsonResource
     {
         return [
             'certification_code' => $this->certification_code,
-            'specialty' => SpeciltyResource::make($this->specialty),
+            'specialty' => SpecialtyResource::make($this->specialty),
         ];
     }
 }
