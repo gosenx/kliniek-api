@@ -7,6 +7,7 @@ use App\Http\Controllers\Api\Patient\PatientController;
 use App\Http\Controllers\Api\Patient\PatientAppointmentController;
 use App\Http\Controllers\Api\Doctor\DoctorController;
 use App\Http\Controllers\Api\Doctor\DoctorAppointmentController;
+use App\Http\Controllers\Api\SpecialtyController;
 
 /*
 |--------------------------------------------------------------------------
@@ -50,6 +51,10 @@ Route::middleware('auth:api')->group(function () {
         Route::put('doctors/{certification_code}/appointments/{id}', [DoctorAppointmentController::class, 'prescribe']);
     });
 
+    // Specialties Resources
+    Route::get('specialties', [SpecialtyController::class, 'index']);
+    Route::get('specialties/{id}', [SpecialtyController::class, 'show']);
+
     Route::middleware('HasAdminPrivileges')->group(function () {
         // Patient Resources
         Route::get('patients', [PatientController::class, 'index']);
@@ -65,6 +70,11 @@ Route::middleware('auth:api')->group(function () {
         Route::get('appointments/{id}', [AppointmentController::class, 'show']);
         Route::put('appointments/{id}', [AppointmentController::class, 'update']);
         Route::delete('appointments/{id}', [AppointmentController::class, 'destroy']);
+
+        // Specialties Resources
+        Route::post('specialties', [SpecialtyController::class, 'store']);
+        Route::put('specialties/{id}', [SpecialtyController::class, 'update']);
+        Route::delete('specialties/{id}', [SpecialtyController::class, 'delete']);
     });
 
 });
