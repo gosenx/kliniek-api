@@ -41,14 +41,20 @@ class AppointmentController extends Controller
         $appointment = Appointment::query()->find($id);
 
         if (!is_null($appointment)) {
-            $appointment->update($request->validated());
-            return response()->json(AppointmentResource::make($appointment));
+            $appointment->updateAppointment($request->validated());
+
+            if ($appointment instanceof Appointment) {
+                return response()->json(AppointmentResource::make($appointment));
+            }
+            
+            return response()->json([
+                'message' => $appointment
+            ]);
         }
 
         return response()->json([
             'message' => 'Appointment not found.'
         ], 404);
-
     }
 
     public function show($id)
