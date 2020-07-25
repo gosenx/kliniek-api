@@ -18,16 +18,16 @@ class AppointmentsTableSeeder extends Seeder
             'patient_code' => Patient::query()->inRandomOrder()->first()->patient_code,
             'doctor_code' => Doctor::query()->inRandomOrder()->first()->certification_code,
             'date' => date('Y/m/d', strtotime('+15 days')),
-            'time' => date('14:10'),
+            'time' => date('16:20'),
             'patient_weight' => '58.98',
             'description' => 'Quero saber do meu estado actual de saúde.'
         ]);
 
         Appointment::makeAppointment([
-            'patient_code' => Patient::query()->inRandomOrder()->first()->patient_code,
-            'doctor_code' => Doctor::query()->inRandomOrder()->first()->certification_code,
+            'patient_code' => Patient::first()->patient_code,
+            'doctor_code' => Doctor::first()->certification_code,
             'date' => date('Y/m/d', strtotime('+3 days')),
-            'time' => date('13:30'),
+            'time' => date('13:40'),
             'patient_weight' => '48.23',
             'description' => 'Me sentindo um pouco atordoado e com dores.'
         ]);

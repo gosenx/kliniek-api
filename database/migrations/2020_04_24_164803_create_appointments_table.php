@@ -18,7 +18,7 @@ class CreateAppointmentsTable extends Migration
             $table->unsignedBigInteger('patient_code');
             $table->string('doctor_code')->nullable();
             $table->date('date');
-            $table->time('time');
+            $table->enum('time', ['13:00', '13:40', '14:20', '15:00', '15:40', '16:20'])->default('13:40');
             $table->enum('state', ['scheduled', 'ongoing', 'complete'])->default('scheduled');
             $table->float('patient_weight')->nullable();
             $table->text('description')->nullable();
