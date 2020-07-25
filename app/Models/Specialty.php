@@ -15,6 +15,31 @@ class Specialty extends Model
         return $this->hasMany(Doctor::class);
     }
 
+    public function getAppointments()
+    {
+        $appointments = [];
+
+        foreach ($this->doctors as $doctor) {
+            $doctor->scheduledAppointments();
+            $appointments = [...$appointments, ...$doctor->scheduledAppointments()];
+        }
+
+        return collect($appointments);
+    }
+
+    public function availableDoctorsOn($date)
+    {
+        $doctors = [];
+
+        foreach ($this->doctors as $doctor) {
+            if (count($doctor->availableHoursOn($date)) > 0) {
+                $doctors[] = $doctor;
+            }
+        }
+
+        return collect($doctors);
+    }
+
     /**
      * This should return all specialties that has at least one doctor associated.
      * The intend result is accomplished by this query

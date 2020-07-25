@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 
 class Doctor extends Model
 {
-
     protected $guarded = [];
 
     public function user()
@@ -24,6 +23,20 @@ class Doctor extends Model
     public function appointments()
     {
         return $this->hasMany(Appointment::class, 'doctor_code', 'certification_code');
+    }
+
+    public function availableHoursOn($date)
+    {
+        $occupiedOursFromDate = $this->scheduledAppointments()->where('date', '=', $date)->pluck('time');
+        $availableHours = ['13:00', '13:40', '14:20', '15:00', '15:40', '16:20'];
+        
+        // Remove all occupied ours from the array containing available ours
+        foreach ($occupiedOursFromDate as $hour) {
+            $timePosition = array_search($hour, $availableHours);
+            unset($availableHours[$timePosition]);
+        }
+
+        return array_values($availableHours);
     }
 
     public function getAllAppointments()
