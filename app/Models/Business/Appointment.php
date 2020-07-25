@@ -40,12 +40,6 @@ class Appointment extends Model
             $patient->weight = $data['patient_weight'];
             $patient->update();
 
-            TimeTable::query()->create([
-                'doctor_code' => $data['doctor_code'],
-                'date' => $data['date'],
-                'time' => $data['time']
-            ]);
-
             return $appointment;
 
         } catch (\Exception $exception) {
@@ -63,18 +57,6 @@ class Appointment extends Model
             $patient = Patient::findPatientByCode($data['patient_code']);
             $patient->weight = $data['patient_weight'];
             $patient->update();
-
-            $time = TimeTable::query()
-                ->where('doctor_code', '=', $data['doctor_code'])
-                ->where('date', '=', $data['date'])
-                ->where('time', '=', $data['time'])
-                ->first();
-
-            $time->update([
-                'doctor_code' => $data['doctor_code'],
-                'date' => $data['date'],
-                'time' => $data['time']
-            ]);
 
             return $appointment;
 
