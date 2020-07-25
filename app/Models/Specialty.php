@@ -32,8 +32,14 @@ class Specialty extends Model
         $doctors = [];
 
         foreach ($this->doctors as $doctor) {
-            if (count($doctor->availableHoursOn($date)) > 0) {
-                $doctors[] = $doctor;
+            $hours = $doctor->availableHoursOn($date);
+
+            if (count($hours) > 0) {
+                $doctors[] = [
+                    'certification_code' => $doctor->certification_code,
+                    'date' => $date,
+                    'hours' => $hours,
+                ];
             }
         }
 

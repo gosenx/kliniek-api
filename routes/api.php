@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\Patient\PatientAppointmentController;
 use App\Http\Controllers\Api\Doctor\DoctorController;
 use App\Http\Controllers\Api\Doctor\DoctorAppointmentController;
 use App\Http\Controllers\Api\SpecialtyController;
+use App\Http\Controllers\Api\SpecialtiesDoctorController;
 
 /*
 |--------------------------------------------------------------------------
@@ -75,6 +76,8 @@ Route::middleware('auth:api')->group(function () {
         Route::post('specialties', [SpecialtyController::class, 'store']);
         Route::put('specialties/{id}', [SpecialtyController::class, 'update']);
         Route::delete('specialties/{id}', [SpecialtyController::class, 'delete']);
-    });
 
+        Route::get('specialties/{id}/doctors', [SpecialtiesDoctorController::class, 'index']);
+        Route::get('specialties/{id}/doctors/date={date}', [SpecialtiesDoctorController::class, 'availableDoctors']);
+    });
 });
