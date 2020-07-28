@@ -27,16 +27,30 @@ class Specialty extends Model
         return collect($appointments);
     }
 
-    public function availableDoctorsOn($date)
+    public function availableDoctorsOn($date, $random = false)
     {
-        $doctors = [];
+        if($random){
+            $doctor = $this->doctors()->inRandomOrder()->first();
+            $hours = $doctor->availableHoursOn($date);
 
+            return [
+                'certification_code' => $doctor->certification_code,
+                'fullname'=>$doctor->user->fullname,
+                'email'=>$doctor->user->email,
+                'date' => $date,
+                'hours' => $hours,
+            ];
+        }
+
+        $doctors = [];
         foreach ($this->doctors as $doctor) {
             $hours = $doctor->availableHoursOn($date);
 
             if (count($hours) > 0) {
                 $doctors[] = [
                     'certification_code' => $doctor->certification_code,
+                    'fullname'=>$doctor->user->fullname,
+                    'email'=>$doctor->user->email,
                     'date' => $date,
                     'hours' => $hours,
                 ];

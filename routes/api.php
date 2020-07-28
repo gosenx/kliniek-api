@@ -55,6 +55,7 @@ Route::middleware('auth:api')->group(function () {
     // Specialties Resources
     Route::get('specialties', [SpecialtyController::class, 'index']);
     Route::get('specialties/{id}', [SpecialtyController::class, 'show']);
+    Route::get('specialties/{id}/doctors', [SpecialtiesDoctorController::class, 'index']);
 
     Route::middleware('HasAdminPrivileges')->group(function () {
         // Patient Resources
@@ -77,7 +78,5 @@ Route::middleware('auth:api')->group(function () {
         Route::put('specialties/{id}', [SpecialtyController::class, 'update']);
         Route::delete('specialties/{id}', [SpecialtyController::class, 'delete']);
 
-        Route::get('specialties/{id}/doctors', [SpecialtiesDoctorController::class, 'index']);
-        Route::get('specialties/{id}/doctors/date={date}', [SpecialtiesDoctorController::class, 'availableDoctors']);
     });
 });
