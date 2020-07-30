@@ -22,7 +22,14 @@ class SpecialtiesDoctorController extends Controller
         }
 
         if ($request->has(['date', 'random'])) {
-            return response()->json($specialty->availableDoctorsOn($request->date, $request->boolean('random')));
+            $date = $request->input('date');
+            if(date('Y-m-d', strtotime($date)) < date('Y-m-d')){
+                return response()->json([
+                    'message' => 'Invalid date.'
+                ], 412);
+            }
+
+            return response()->json($specialty->availableDoctorsOn($date, $request->boolean('random')));
         }
 
         return response()->json(DoctorResource::collection(Specialty::find($id)->doctors));
