@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\AppointmentController;
 use App\Http\Controllers\Api\Patient\PatientController;
 use App\Http\Controllers\Api\Patient\PatientAppointmentController;
+use App\Http\Controllers\Api\Patient\ContactsController;
 use App\Http\Controllers\Api\Doctor\DoctorController;
 use App\Http\Controllers\Api\Doctor\DoctorAppointmentController;
 use App\Http\Controllers\Api\SpecialtyController;
@@ -31,6 +32,11 @@ Route::middleware('auth:api')->group(function () {
         Route::get('patients/{patient_code}', [PatientController::class, 'show']);
         Route::put('patients/{patient_code}', [PatientController::class, 'update']);
         Route::delete('patients/{patient_code}', [PatientController::class, 'destroy']);
+
+        // Patients Contacts
+        Route::get('patients/{patient_code}/contacts', [ContactsController::class, 'index']);
+        Route::post('patients/{patient_code}/contacts', [ContactsController::class, 'store']);
+        Route::delete('patients/{patient_code}/contacts/{id}', [ContactsController::class, 'destroy']);
 
         // Patients Appointment Resource
         Route::get('patients/{patient_code}/appointments', [PatientAppointmentController::class, 'index']);
