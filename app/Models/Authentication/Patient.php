@@ -40,7 +40,7 @@ class Patient extends Model
 
     public function getAppointmentsByState($state)
     {
-        $this->appointments()->where('state', '=', $state)->get();
+        return $this->appointments()->where('state', '=', $state)->get();
     }
 
     public function getAppointmentsById($id)
