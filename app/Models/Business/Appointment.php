@@ -6,6 +6,7 @@ use App\Models\Authentication\Doctor;
 use App\Models\Authentication\Patient;
 use App\Models\Specialty;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Log;
 
 class Appointment extends Model
 {
@@ -34,15 +35,10 @@ class Appointment extends Model
     public static function makeAppointment(array $data)
     {
         try {
-            $appointment = Appointment::query()->create($data);
-
-            $patient = Patient::findPatientByCode($data['patient_code']);
-            $patient->weight = $data['patient_weight'];
-            $patient->update();
-
-            return $appointment;
+            return Appointment::query()->create($data);
 
         } catch (\Exception $exception) {
+            Log::error($exception);
             return 'Verify the inputs, they might be duplicates.';
         }
 
@@ -51,7 +47,7 @@ class Appointment extends Model
     public static function updateAppointment(array $data)
     {
         try {
-            
+
             $appointment = self::query()->update($data);
 
             $patient = Patient::findPatientByCode($data['patient_code']);

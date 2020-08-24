@@ -25,7 +25,7 @@ class StoreOrUpdateAppointmentRequest extends FormRequest
     {
         return [
             'doctor_code' => 'nullable|exists:doctors,certification_code',
-            'date' => 'required|date|after_or_equal:now + 2hours',
+            'date' => 'required|date',
             'time' => 'required',
             'patient_weight' => 'numeric',
             'description' => 'nullable'
