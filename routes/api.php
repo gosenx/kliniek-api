@@ -84,5 +84,7 @@ Route::middleware('auth:api')->group(function () {
         Route::put('specialties/{id}', [SpecialtyController::class, 'update']);
         Route::delete('specialties/{id}', [SpecialtyController::class, 'delete']);
 
+        // Stats
+        Route::get('stats', [\App\Http\Controllers\Api\StatsController::class, 'index']);
     });
 });
